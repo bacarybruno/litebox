@@ -1,0 +1,21 @@
+page-home {
+    z-index: 99 !important;
+    contain: initial !important;
+    @media (max-width: 576px) {
+        ion-card-content {
+            font-size: 2rem !important;
+        }
+    }
+    .web-fab {
+        right: -13.5% !important;
+        top: 19px !important;
+    }   
+    .snackbar {
+        min-width: 288px;
+        max-width: 568px;
+        border-radius: 2px;
+    }
+    ion-item-divider {
+        border-bottom: 0 !important;
+    }
+}

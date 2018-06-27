@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-item>
+      <ion-avatar item-start>
+        <img [src]="user?.photoURL || 'assets/imgs/avatar.png'">
+      </ion-avatar>
+      <h2>{{user.displayName}}</h2>
+      <p>{{user.email}}</p>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item-divider>{{strings.MENU_NOTIFICATIONS}}</ion-item-divider>
+    <a href="#" ion-item>GDPR</a>
+    <ion-item-divider>{{strings.MENU_MENU}}</ion-item-divider>
+    <button ion-item>
+      <ion-label>{{strings.MENU_LANG}}</ion-label>
+      <ion-select [(ngModel)]="lang" (ionChange)="setLang()" [cancelText]="strings.OPT_CANCEL">
+        <ion-option value="en">{{strings.MENU_LANG_ENGLISH}}</ion-option>
+        <ion-option value="fr">{{strings.MENU_LANG_FRENCH}}</ion-option>
+      </ion-select>
+    </button>
+    <button ion-item (tap)="profile()">{{strings.MENU_PROFILE}}</button>
+    <button ion-item (tap)="settings()">{{strings.MENU_SETTINGS}}</button>
+    <button ion-item (tap)="logout()">{{strings.MENU_LOGOUT}}</button>
+  </ion-list>
+</ion-content>  
+
+<ion-footer>
+  <ion-toolbar>
+    <button ion-item>
+      <h2>{{strings.CTA_BUY}}</h2>
+      <p><ion-badge>{{strings.CTA_BUY_STATE}}.</ion-badge></p>
+    </button>
+  </ion-toolbar>
+</ion-footer>

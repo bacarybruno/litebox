@@ -1,0 +1,86 @@
+<ion-header gated>
+  <mdc-linear-progress *ngIf="loading"></mdc-linear-progress>
+
+  <ion-navbar color="primary">
+    <ion-buttons left>
+      <button ion-button icon-only *ngIf="folderIsRoot()">
+        <ion-icon name="md-home"></ion-icon>
+      </button>
+      <button ion-button icon-only (tap)="navigateToParent()" *ngIf="!folderIsRoot()">
+        <ion-icon name="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons right>
+      <button ion-button avatar-btn no-margin no-padding (tap)="openMenu($event)" *ngIf="!moving.isMoving">
+        <img [src]="user?.photoURL || 'assets/imgs/avatar.png'" alt="">
+      </button>
+      <button ion-button icon-only *ngIf="moving.isMoving" (tap)="move()">
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title *ngIf="folderIsRoot()">{{"HOME" | translate}}</ion-title>
+    <ion-title *ngIf="!folderIsRoot()">{{currentFolder()?.name}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding [ngxFileDropzone]="readMode" (fileDrop)="filePick($event)" hide-fab>
+
+  <ion-refresher (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list no-lines>
+    <ion-row [hidden]="!folderEmpty()">
+      <ion-item-divider>{{"GET_STARTED" | translate}}</ion-item-divider>
+      <item-create-folder col-12 col-md-4 col-lg-3 (tap)="createFolder()"></item-create-folder>
+      <item-create-file col-12 col-md-4 col-lg-3 [ngxFilePicker]="readMode" (filePick)="filePick($event)"></item-create-file>
+    </ion-row>
+    
+    <ion-item-divider [hidden]="docs.folders.length === 0">{{"FOLDERS" | translate}}</ion-item-divider>
+    <ion-row>
+      <item-folder *ngFor="let f of docs.folders" [data]="f" (onNavigate)="navigateToChild($event)" (onDelete)="onDeleteFolder($event)"
+        (onRename)="onRenameFolder($event)" (onMove)="onMoveFolder($event)" (onShare)="onShare($event)" (onStartDownload)="onStartDownload()" (onEndDownload)="onEndDownload()" col-12 col-md-4 col-lg-3></item-folder>
+    </ion-row>
+
+    <ion-item-divider [hidden]="docs.files.length === 0">{{"FILES" | translate}}</ion-item-divider>
+    <ion-row>
+      <item-file *ngFor="let f of docs.files" [data]="f" (onDelete)="onDeleteFile($event)" (onRename)="onRenameFile($event)" (onMove)="onMoveFile($event)"
+        (onShare)="onShare($event)" (onStartDownload)="onStartDownload()" (onEndDownload)="onEndDownload()" col-6 col-md-4 col-lg-3></item-file>
+    </ion-row>
+  </ion-list>
+
+
+  <ion-fab bottom right class="mobile-fab hidden-md-up" #mobileFab>
+    <button ion-fab>
+      <ion-icon name="md-cloud-upload"></ion-icon>
+    </button>
+    <ion-fab-list side="top">
+      <button ion-fab [ngxFilePicker]="readMode" (filePick)="mobileFab.close();filePick($event)">
+        <ion-icon name="md-document"></ion-icon>
+        <ion-label>{{"UPLOAD_FILE" | translate}}</ion-label>
+      </button>
+      <button ion-fab (tap)="mobileFab.close();createFolder()">
+        <ion-icon name="md-folder"></ion-icon>
+        <ion-label>{{"NEW_FOLDER" | translate}}</ion-label>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <ion-fab right top class="web-fab hidden-md-down" #webFab>
+    <button ion-fab>
+      <ion-icon name="md-cloud-upload"></ion-icon>
+    </button>
+    <ion-fab-list side="bottom">
+      <button ion-fab [ngxFilePicker]="readMode" (filePick)="webFab.close();filePick($event)">
+        <ion-icon name="md-document"></ion-icon>
+        <ion-label>{{"UPLOAD_FILE" | translate}}</ion-label>
+      </button>
+      <button ion-fab (tap)="webFab.close();createFolder()">
+        <ion-icon name="md-folder"></ion-icon>
+        <ion-label>{{"NEW_FOLDER" | translate}}</ion-label>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
+
+</ion-content>

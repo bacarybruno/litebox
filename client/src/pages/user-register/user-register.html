@@ -1,0 +1,46 @@
+<!--
+  Generated template for the UserRegisterPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-content not-gated>
+
+  <div class="app-cover"></div>
+  <div class="app-content" padding>
+    <img src="./assets/imgs/logo.png" class="thumbnail">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <button ion-button block class="facebookButton" (tap)="facebookRegister()"> {{"CTA_SIGNUP_FACEBOOK" | translate}}</button>
+        </ion-col>
+        <ion-col>
+          <button ion-button block class="googleButton" (tap)="googleRegister()"> {{"CTA_SIGNUP_GOOGLE" | translate}}</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <div class="hrLine">
+      <span>{{"OR" | translate}}</span>
+    </div>
+
+    <ion-list no-lines padding-top>
+      <ion-item>
+        <ion-input type="text" placeholder='{{"FORM_FULL_NAME" | translate}}' [(ngModel)]="userVm.displayName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="email" placeholder='{{"FORM_EMAIL" | translate}}' [(ngModel)]="userVm.email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="password" placeholder='{{"FORM_PASSWORD" | translate}}' [(ngModel)]="userVm.password"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input type="password" placeholder='{{"FORM_CONFIRM_PASSWORD" | translate}}' [(ngModel)]="userVm.confirmPassword"></ion-input>
+      </ion-item>
+    </ion-list>
+    <button ion-button clear color="primary" (tap)="loginPage();" float-left>{{"CTA_SIGNIN" | translate}}</button>
+    <!--button ion-button clear color="primary" (tap)="forgotPasswordPage();">Forgot password?</button-->
+    <button ion-button color="primary" (tap)="register();" float-right>{{"CTA_SIGNUP" | translate}}</button>
+  </div>
+
+</ion-content>

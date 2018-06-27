@@ -1,0 +1,128 @@
+version: '2'
+services:
+###############################################
+#            WEB CLIENT CLUSTER               
+###############################################
+  casa-web:
+    image: supfile/haproxy-web:latest
+    hostname: casa-web
+    container_name: casa-web
+    depends_on:
+      - casa-web1
+      - casa-web2
+    links:
+      - casa-web1:web1
+      - casa-web2:web2
+    ports:
+      - 80:80
+    networks:
+      - casa-network
+
+  casa-web1:
+    image: supfile/nginx-web:latest
+    hostname: casa-web1
+    container_name: casa-web1
+    depends_on:
+      - casa-node
+    links:
+      - casa-node:webservice
+    volumes:
+      - ./client/www:/var/www/html
+    networks:
+      - casa-network
+
+  casa-web2:
+    image: supfile/nginx-web:latest
+    hostname: casa-web2
+    container_name: casa-web2
+    depends_on:
+      - casa-node
+    links:
+      - casa-node:webservice
+    volumes:
+      - ./client/www:/var/www/html
+    networks:
+      - casa-network
+
+###############################################
+#            WEB APP (WEBSERVICE)
+###############################################
+  casa-node:
+    image: supfile/haproxy-node:latest
+    hostname: casa-node
+    container_name: casa-node
+    depends_on:
+      - casa-node1
+      - casa-node2
+    links:
+      - casa-node1:node1
+      - casa-node2:node2
+      - casa-node3:node3
+    ports: 
+      - 3000:3000
+    networks:
+      - casa-network
+
+  casa-node1:
+      image: supfile/node-api:latest
+      container_name: casa-node1
+      volumes:
+        - D:/:/storage
+        - ./core:/usr/src/app
+      depends_on:
+        - casa-mongodb        
+      links:
+        - casa-mongodb:mongodb
+      networks:
+        - casa-network
+      restart: always
+
+  casa-node2:
+      image: supfile/node-api:latest
+      container_name: casa-node2
+      volumes:
+        - D:/:/storage
+        - ./core:/usr/src/app
+      depends_on:
+        - casa-mongodb        
+      links:
+        - casa-mongodb:mongodb
+      networks:
+        - casa-network
+      restart: always
+
+  casa-node3:
+      image: supfile/node-api:latest
+      container_name: casa-node3
+      volumes:
+        - D:/:/storage
+        - ./core:/usr/src/app
+      depends_on:
+        - casa-mongodb        
+      links:
+        - casa-mongodb:mongodb
+      networks:
+        - casa-network
+      restart: always
+
+  casa-mongodb:
+      image: mongo:latest
+      container_name: casa-mongodb
+      environment:
+        - MONGO_DATA_DIR=/data
+      volumes:
+        - ./data:/data
+      ports:
+        - 27017:27017
+      networks:
+        - casa-network
+      restart: always
+      command: mongod --smallfiles --logpath=/dev/null
+
+networks:
+  casa-network:
+    driver: bridge
+    ipam: 
+      driver: default
+      config:
+        - subnet: 192.168.10.0/24

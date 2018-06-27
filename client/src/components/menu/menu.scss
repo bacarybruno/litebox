@@ -1,0 +1,15 @@
+menu {
+    margin: 0 !important;
+    padding: 0 !important;
+    ion-toolbar {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    .item-inner {
+        border: 0 !important;
+    }
+    ion-list {
+        margin-bottom: 0 !important;
+        max-height: 250px !important;
+    }
+}

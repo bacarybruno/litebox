@@ -1,0 +1,9 @@
+<button ion-item (tap)="openFolder()" (press)="openOptions($event)" (contextmenu)="openOptions($event)">
+  <ion-thumbnail item-start>
+    <img src="assets/imgs/filetypes/folder.svg">
+  </ion-thumbnail>
+  <h2>{{data.name}}</h2>
+  <p>
+    <ion-badge>File folder</ion-badge> • {{readableDate}}
+  </p>
+</button>     

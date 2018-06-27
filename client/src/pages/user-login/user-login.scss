@@ -1,0 +1,6 @@
+page-user-login {
+    .toolbar-background{ background:transparent; border-style:none; }
+    .toolbar::after,.header-md::after{ background-image:none; }
+    .centerAlign { display: table-cell; vertical-align: middle; border:#ff0000 1px solid; }
+    .item{ border:$border-color 1px solid !important; margin-bottom:10px; }
+}

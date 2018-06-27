@@ -1,0 +1,5 @@
+page-user-register {
+    .toolbar-background{ background:transparent; border-style:none; }
+    .toolbar::after,.header-md::after{ background-image:none; }
+    .item{ border:$border-color 1px solid !important; margin-bottom:10px; }
+}

@@ -1,0 +1,24 @@
+<!--button ion-item (tap)="openFile()" (press)="openOptions($event)" (contextmenu)="openOptions($event)">
+  <ion-thumbnail item-start>
+    <img [src]="icon">
+  </ion-thumbnail>
+  <h2>{{data.name}}</h2>
+  <p>
+    <ion-badge>{{readableSize}}</ion-badge> • {{readableDate}}
+  </p>
+</button-->
+
+<ion-card tappable (tap)="openFile()" (press)="openOptions($event)" (contextmenu)="openOptions($event)">
+
+  <img role="preview" [src]="preview" onError="src='./assets/imgs/icons/icon-no-image.svg'">
+  <div id="cover"></div>
+
+  <ion-item>
+    <img item-start [src]="icon" role="icon" class="hidden-md-down">
+    <h2>{{data.name}}</h2>
+    <p class="display-on-hover">
+      <ion-badge>{{readableSize}}</ion-badge> • {{readableDate}}
+    </p>
+  </ion-item>
+
+</ion-card>
